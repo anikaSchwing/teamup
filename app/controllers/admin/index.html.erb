@@ -1,0 +1,15 @@
+<h2> Matches of <%= current_user.name  %> </h2>
+
+<% @matches.each do |match| %>
+  <% if match.day < Date.tomorrow %>
+    <p>
+      <%= match.day.to_date %>:
+      You are matched with
+      <% if match.student_1 === current_user %>
+        <%= match.student_2.name %>
+      <% else %>
+        <%= match.student_1.name %>
+      <% end %>
+    </p>
+  <% end %>
+<% end %>

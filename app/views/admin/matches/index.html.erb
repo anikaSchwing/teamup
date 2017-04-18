@@ -8,10 +8,3 @@
       <% end %>
     </ul>
 <% end %>
-
-<h2> All users </h2>
-<% @users = User.all %>
-<% @users.each do |user| %>
-  <%= user.name %> <% if user.admin? %>(admin)<% end %>
-  <br/>
-<% end %>

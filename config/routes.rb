@@ -6,5 +6,6 @@ Rails.application.routes.draw do
 
   namespace 'admin' do
     resources :matches, only:[:index]
+    resources :users, only: [:index]
   end
 end
