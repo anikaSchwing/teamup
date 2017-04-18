@@ -1,9 +1,11 @@
 <h2> Matches index </h2>
 
 <% @matches.each do |match| %>
-  date: <%= match.day.to_date %>
-  <p>
-    <%= match.student_2.email %> is matched with
-    <%= match.student_1.email %>
-  </p>
+  <% if match.day < Date.tomorrow %>
+    date: <%= match.day.to_date %>
+    <p>
+      <%= match.student_2.email %> is matched with
+      <%= match.student_1.email %>
+    </p>
+  <% end %>
 <% end %>
