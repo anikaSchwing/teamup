@@ -4,6 +4,8 @@ class Admin::MatchesController < ApplicationController
     redirect_to :new_user_session unless current_user && current_user.admin?
   end
 
+  layout 'admin'
+
   def index
     all_matches = Match.all
     @matches = all_matches.group_by(&:day)

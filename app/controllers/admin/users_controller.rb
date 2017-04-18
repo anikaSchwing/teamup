@@ -4,6 +4,8 @@ class Admin::UsersController < ApplicationController
     redirect_to :new_user_session unless current_user && current_user.admin?
   end
 
+  layout 'admin'
+
   def index
     @users = User.all
   end
