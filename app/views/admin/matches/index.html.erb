@@ -1,0 +1,9 @@
+<h2> All matches </h2>
+
+<% @matches.each do |match| %>
+    <p>
+      <%= match.day.to_date %>:
+      <%= match.student_2.name %> matched with
+      <%= match.student_1.name %>
+    </p>
+<% end %>
