@@ -1,0 +1,11 @@
+<h2> All users </h2>
+<% @users.each do |user| %>
+  <%= user.name %>
+  <% if user.admin? %>
+    (admin)
+    <%= link_to "Make student", admin_user_path(user.id, admin: false), method: :patch  %>
+  <% else %>
+    <%= link_to "Make admin", admin_user_path(user.id, admin: true), method: :patch  %>
+  <% end %>
+  <br/>
+<% end %>
