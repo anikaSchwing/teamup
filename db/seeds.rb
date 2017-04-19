@@ -11,7 +11,7 @@ student5 = User.create!(name: "count von count", email: "student5@b.com", passwo
 student6 = User.create!(name: "elmo", email: "student6@b.com", password: "testing", admin: false)
 puts "Created new users"
 
-Match.create!(day: "2017-04-03T00:00:00+00:00", student_1: student1, student_2: student2)
-Match.create!(day: "2017-05-03T00:00:00+00:00", student_1: student1, student_2: student3)
-Match.create!(day: "2017-05-03T00:00:00+00:00", student_1: student1, student_2: student2)
-puts "Created matches"
+# Match.create!(day: "2017-04-03T00:00:00+00:00", student_1: student1, student_2: student2)
+# Match.create!(day: "2017-05-03T00:00:00+00:00", student_1: student1, student_2: student3)
+# Match.create!(day: "2017-05-03T00:00:00+00:00", student_1: student1, student_2: student2)
+# puts "Created matches"

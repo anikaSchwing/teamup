@@ -1,26 +1,17 @@
 <h2> All matches </h2>
 
 <table><tr>
-<% (Date.today-7..Date.today).each do |day| %>
-  <td>
-    <h4><%= day %></h4>
+<% (Date.today.beginning_of_week()..Date.today.end_of_week()).each do |day| %>
+  <td width="200">
+    <h4><%= day.to_formatted_s(:rfc822) %></h4>
     <% if (@matches[day].to_a.length > 0) %>
       <% @matches[day].to_a.each do |match| %>
-          <li><%= match.student_1.name %> - <%= match.student_2.name %></li>
+          <p><%= match.student_1.name %> - <%= match.student_2.name %></p>
       <% end %>
+      <%= link_to "Reset matches", admin_matches_path(day: day), method: :create  %>
     <% else %>
-      <%= link_to "Create match", admin_matches_path(day: day), method: :create  %>
+      <%= link_to "Create matches", admin_matches_path(day: day), method: :create  %>
     <% end %>
   </td>
 <% end %>
 </tr></table>
-
-<br><br>
-<% @matches.each_pair do |date, matches| %>
-    <ul>
-      <%= date %>:
-      <% matches.each do |match| %>
-        <li><%= match.student_1.name %> - <%= match.student_2.name %></li>
-      <% end %>
-    </ul>
-<% end %>
