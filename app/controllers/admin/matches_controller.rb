@@ -26,7 +26,8 @@ private
       all_students.each do |student|
         if (!matched_students.flatten.include?(student))
           first_student = student
-          second_student = findMatch(first_student)
+          second_student = findMatch(first_student, matched_students)
+
           matched_students << [first_student, second_student]
         end
       end
@@ -34,9 +35,14 @@ private
       return matched_students
     end
 
-    def findMatch(first_student)
+    def findMatch(first_student, matched_students)
       students = User.where(admin:false).where.not(id: first_student.id)
       second_student = students[rand(students.length)]
+      if (!matched_students.flatten.include?(second_student))
+        return second_student
+      else
+        findMatch(first_student, matched_students)
+      end
     end
 
     def createMatches(day)
