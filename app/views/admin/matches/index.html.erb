@@ -4,7 +4,7 @@
     <ul>
       <%= date.to_date %>:
       <% matches.each do |match| %>
-        <li><%= match.student_2.name %> matched with <%= match.student_1.name %></li>
+        <li><%= match.student_1.name %> matched with <%= match.student_2.name %></li>
       <% end %>
     </ul>
 <% end %>

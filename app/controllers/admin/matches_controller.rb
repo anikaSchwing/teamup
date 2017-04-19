@@ -20,26 +20,25 @@ end
 
 private
     def matchStudents()
-      first_student = User.order("RANDOM()").first
-      second_student = User.order("RANDOM()").second
+      matched_students = []
 
-      if (first_student != second_student)
-        return first_student, second_student
-      else
-        return []
-      end
+      first_student = User.where(admin:false).first
+      second_student = findMatch(first_student)
+
+      matched_students << [first_student, second_student]
+    end
+
+    def findMatch(first_student)
+      students = User.where(admin:false).where.not(id: first_student.id)
+      second_student = students[rand(students.length)]
     end
 
     def createMatches(day)
       matched_students = matchStudents()
 
-      if (matched_students.length > 0)
-        match = Match.create(day: day, student_1: matched_students[0], student_2: matched_students[1])
-
-        if match.save
-          redirect_to admin_matches_path, notice: "Match created for #{day.to_date}"
-        else
-          render :index
-        end
+      matched_students.each do |students|
+        new_match = Match.create(day: day, student_1: students[0], student_2: students[1])
       end
+
+      redirect_to admin_matches_path, notice: "Matches created for #{day.to_date}"
     end
