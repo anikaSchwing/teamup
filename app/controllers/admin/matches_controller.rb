@@ -13,6 +13,7 @@ class Admin::MatchesController < ApplicationController
 
   def create
     requested_day = params[:day]
+    removeExistingMatches(requested_day)
     createMatches(requested_day)
   end
 
@@ -53,4 +54,13 @@ private
       end
 
       redirect_to admin_matches_path, notice: "Matches created for #{day.to_date}"
+    end
+
+    def removeExistingMatches(day)
+      todays_matches = Match.where(day: day)
+      if(todays_matches.length > 0)
+        todays_matches.each do |match|
+          match.destroy
+        end
+      end
     end
