@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :matches, only:[:index]
 
   namespace 'admin' do
-    resources :matches, only:[:index]
+    resources :matches, only:[:index, :create]
     resources :users, only: [:index, :update]
   end
 end
