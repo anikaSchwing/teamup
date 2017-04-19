@@ -21,11 +21,17 @@ end
 private
     def matchStudents()
       matched_students = []
+      all_students = User.where(admin:false)
 
-      first_student = User.where(admin:false).first
-      second_student = findMatch(first_student)
+      all_students.each do |student|
+        if (!matched_students.flatten.include?(student))
+          first_student = student
+          second_student = findMatch(first_student)
+          matched_students << [first_student, second_student]
+        end
+      end
 
-      matched_students << [first_student, second_student]
+      return matched_students
     end
 
     def findMatch(first_student)
