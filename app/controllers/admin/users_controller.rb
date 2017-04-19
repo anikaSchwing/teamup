@@ -22,6 +22,6 @@ class Admin::UsersController < ApplicationController
 end
 
 private
-  def user_params
-    params.permit(:name, :email, :admin)
-  end
+    def user_params
+      params.permit(:name, :email, :admin)
+    end
