@@ -6,5 +6,6 @@ class MatchesController < ApplicationController
 
   def index
     @matches = current_user.match_1 + current_user.match_2
+    @matches.sort_by!()
   end
 end
