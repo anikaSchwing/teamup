@@ -38,4 +38,17 @@ class Match < ApplicationRecord
     return existing_match
   end
 
+  def self.createMatches(day)
+    new_matches = newMatches()
+    possible_matches = (@all_students.length-1) * (@all_students.length/2)
+
+    if(existingMatch(new_matches) && (@previous_matches.length < possible_matches))
+      createMatches(day)
+    else
+      new_matches.each do |students|
+        Match.create(day: day, student_1: students[0], student_2: students[1])
+      end
+    end
+  end
+
 end

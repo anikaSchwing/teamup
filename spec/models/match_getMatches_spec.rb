@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Match, type: :model do
 
-  describe ".getMatches" do
+  describe "getMatches" do
     let(:student) { create :user }
     let(:another_student) { create :user }
     let!(:match1) { create :match, student_1: student, student_2: another_student }
