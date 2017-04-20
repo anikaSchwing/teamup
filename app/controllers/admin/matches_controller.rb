@@ -6,18 +6,14 @@ class Admin::MatchesController < ApplicationController
   layout 'admin'
 
   def index
-    all_matches = Match.all
-    @matches = all_matches.group_by(&:day)
+    @matches = Match.all.group_by(&:day)
   end
 
   def create
     requested_day = params[:day]
 
     @all_students = User.where(admin:false)
-    @previous_matches = Array.new
-    Match.all.each do |match|
-      @previous_matches << [match.student_1, match.student_2]
-    end
+    @previous_matches = Match.getMatches()
 
     createMatches(requested_day)
   end
