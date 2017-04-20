@@ -10,20 +10,16 @@ class Admin::MatchesController < ApplicationController
   end
 
   def create
-    requested_day = params[:day]
-
     @all_students = User.where(admin:false)
     @previous_matches = Match.getMatches()
-
-    createMatches(requested_day)
+    createMatches(params[:day])
   end
 end
 
 private
     def newMatches
       new_matches = []
-      current_set = Array.new(@all_students)
-      current_set.shuffle!
+      current_set = Array.new(@all_students).shuffle()
 
       while current_set.length > 1 do
         first_student = current_set.shift()
@@ -56,6 +52,6 @@ private
         new_matches.each do |students|
           success = true if Match.create(day: day, student_1: students[0], student_2: students[1])
         end
+        redirect_to admin_matches_path, notice: "Matches created for #{day.to_date}" if success
       end
-      redirect_to admin_matches_path, notice: "Matches created for #{day.to_date}" if success
     end
