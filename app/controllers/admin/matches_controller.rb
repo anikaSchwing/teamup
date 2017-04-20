@@ -17,23 +17,13 @@ class Admin::MatchesController < ApplicationController
 end
 
 private
-    def newMatches
-      new_matches = []
-      current_set = Array.new(@all_students).shuffle()
-
-      while current_set.length > 1 do
-        first_student = current_set.shift()
-        second_student = current_set.shift()
-
-        new_matches << [first_student, second_student]
-      end
-      return new_matches
-    end
-
     def existingMatch?(new_matches)
       existing_match = false
       new_matches.each do |match|
         match = Array.new(match)
+        puts @previous_matches.include?(match)
+        puts @previous_matches.include?(match.reverse)
+        puts ' '
         if (@previous_matches.include?(match) || @previous_matches.include?(match.reverse))
           existing_match = true
         end
@@ -43,7 +33,7 @@ private
 
     def createMatches(day)
       success = false
-      new_matches = newMatches()
+      new_matches = Match.newMatches()
       possible_matches = (@all_students.length-1) * (@all_students.length/2)
 
       if(existingMatch?(new_matches) && (@previous_matches.length < possible_matches))
