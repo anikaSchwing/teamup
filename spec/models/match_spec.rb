@@ -13,5 +13,24 @@ RSpec.describe Match, type: :model do
     end
   end
 
+  describe "validations" do
+      it "is invalid without a date" do
+        match = Match.new(day: "")
+        match.valid?
+        expect(match.errors).to have_key(:day)
+      end
+
+      it "is invalid without first student" do
+        match = Match.new(student_1: nil)
+        match.valid?
+        expect(match.errors).to have_key(:student_1)
+      end
+
+      it "is invalid without second student" do
+        match = Match.new(student_2: nil)
+        match.valid?
+        expect(match.errors).to have_key(:student_2)
+      end
+  end
 
 end

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root 'matches#index'
 
-  devise_for :users
+  devise_for :users, :controllers => { registrations: 'registrations' }
   resources :matches, only:[:index]
 
   namespace 'admin' do
