@@ -7,11 +7,11 @@ class Match < ApplicationRecord
   @all_students = User.where(admin:false)
 
   def self.getMatches
-    previous_matches = Array.new
+    @previous_matches = Array.new
     all.each do |match|
-      previous_matches << [match.student_1, match.student_2]
+      @previous_matches << [match.student_1, match.student_2]
     end
-    return previous_matches
+    return @previous_matches
   end
 
   def self.newMatches
@@ -27,5 +27,15 @@ class Match < ApplicationRecord
     return new_matches
   end
 
+  def self.existingMatch(new_matches)
+    existing_match = false
+    new_matches.each do |match|
+      match = Array.new(match)
+      if (@previous_matches.include?(match) || @previous_matches.include?(match.reverse))
+        existing_match = true
+      end
+    end
+    return existing_match
+  end
 
 end

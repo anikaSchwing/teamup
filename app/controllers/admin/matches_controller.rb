@@ -6,6 +6,7 @@ class Admin::MatchesController < ApplicationController
   layout 'admin'
 
   def index
+    puts 'getting all grouped matches'
     @matches = Match.all.group_by(&:day)
   end
 
@@ -17,26 +18,12 @@ class Admin::MatchesController < ApplicationController
 end
 
 private
-    def existingMatch?(new_matches)
-      existing_match = false
-      new_matches.each do |match|
-        match = Array.new(match)
-        puts @previous_matches.include?(match)
-        puts @previous_matches.include?(match.reverse)
-        puts ' '
-        if (@previous_matches.include?(match) || @previous_matches.include?(match.reverse))
-          existing_match = true
-        end
-      end
-      return existing_match
-    end
-
     def createMatches(day)
       success = false
       new_matches = Match.newMatches()
       possible_matches = (@all_students.length-1) * (@all_students.length/2)
 
-      if(existingMatch?(new_matches) && (@previous_matches.length < possible_matches))
+      if(Match.existingMatch(new_matches) && (@previous_matches.length < possible_matches))
         createMatches(day)
       else
         new_matches.each do |students|
