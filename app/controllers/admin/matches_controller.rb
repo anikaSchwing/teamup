@@ -20,37 +20,27 @@ class Admin::MatchesController < ApplicationController
 end
 
 private
-    def matchStudents()
-      matched_students = []
-      all_students = User.where(admin:false)
+    def newMatches
+      new_matches = []
+      current_set = Array.new(@all_students.order("RANDOM()"))
 
-      all_students.each do |student|
-        if (!matched_students.flatten.include?(student))
-          second_student = findMatch(student, matched_students)
-          matched_students << [student, second_student]
-        end
+      while current_set.length > 1 do
+        first_student = current_set.shift()
+        second_student = current_set.shift()
+
+        new_matches << [first_student, second_student]
       end
-      return matched_students
-    end
-
-    def findMatch(student, matched_students)
-      students = User.where(admin:false).where.not(id: student.id)
-      second_student = students[rand(students.length)]
-
-      if (!matched_students.flatten.include?(second_student))
-        return second_student
-      else
-        findMatch(student, matched_students)
-      end
+      return new_matches
     end
 
     def createMatches(day)
-      matched_students = matchStudents()
+      @all_students = User.where(admin:false)
+      puts @all_students
       success = false
+      matched_students = newMatches()
 
       matched_students.each do |students|
-        new_match = Match.create(day: day, student_1: students[0], student_2: students[1])
-        success = true if new_match.save
+        success = true if Match.create(day: day, student_1: students[0], student_2: students[1])
       end
 
       redirect_to admin_matches_path, notice: "Matches created for #{day.to_date}" if success
